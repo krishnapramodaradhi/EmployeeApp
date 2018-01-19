@@ -7,6 +7,11 @@ const bodyParser    = require('body-parser');
 const dotenv        = require('dotenv').config();
 
 /**
+ * DB connection goes here
+ */
+const db            = require('./api/utils/db');
+
+/**
  * routes goes here
  */
 const employee      = require('./api/routes/employee');
