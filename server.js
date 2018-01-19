@@ -16,7 +16,7 @@ const port        = process.env.PORT || 8000;
 /**
  * Creating a server
  */
-const server      = http.createServer();
+const server      = http.createServer(app);
 
 /**
  * Listener for the application
