@@ -1,19 +1,25 @@
 /**
  * Express framework goes here
  */
-const express       = require('express');
-const router        = express.Router();
-const mongoose      = require('mongoose');
+const express               = require('express');
+const router                = express.Router();
+const mongoose              = require('mongoose');
 
 /**
  * Model imports goes here
  */
-const Employee      = require('../models/employeeModel');
+const Employee              = require('../models/employeeModel');
+
+/**
+ * Controllers goes here
+ */
+const employeeController  = require('../controllers/employeeController');
+const resultController     = require('../controllers/resultController');
 
  /**
   * Utilities goes here
   */
-  const logger      = require('../utils/logger');
+  const logger              = require('../utils/logger');
 
 /**
  * @argument req
@@ -23,36 +29,14 @@ const Employee      = require('../models/employeeModel');
  */
 router.post('/register', (req, res) => {
     logger.info(process.env.TILDA+ 'Inside /register '+process.env.POST+' method'+process.env.TILDA);
-    const employee = new Employee({
-        _id: new mongoose.Types.ObjectId(),
-        employee_id: req.body.employee_id,
-        employee_name: req.body.employee_name,
-        password: req.body.password,
-        designation: req.body.designation,
-        serviceLine: req.body.serviceLine,
-        role: req.body.role
-    });
-    employee.save()
-        .then(result => {
-            logger.info(process.env.TILDA+ 'Created Employee: '+ result +process.env.TILDA);
-            res.status(201).json({
-                success: true,
-                message: 'Employee created successfully',
-                createdEmployee: {
-                    employee: employee,
-                    request: {
-                        type: process.env.GET,
-                        description: 'GET_INDIVIDUAL_EMPLOYEE',
-                        url: process.env.EMPLOYEE_DOMAIN+result.employee_id
-                    }
-                }
-            })
-        }).catch(err => {
-            logger.info(process.env.TILDA+ 'Error: '+ err +process.env.TILDA);
-            res.status(500).json({
-                error: err
-            });
-        })
+        !req.body.employee_id && !req.body.employee_name && !req.body.password && !req.body.designation &&!req.body.serviceLine && !req.body.role ? resultController.error(res, 'Not all fields were          provided')
+        :!req.body.employee_id ? resultController.error(res, 'No EmployeeID was provided')
+        :!req.body.employee_name ? resultController.error(res, 'No Employee name was provided')
+        :!req.body.password ? resultController.error(res, 'No password was provided')
+        :!req.body.designation ? resultController.error(res, 'No designation was provided')
+        :!req.body.serviceLine ? resultController.error(res, 'No service line was provided')
+        :!req.body.role ? resultController.error(res, 'No role was provided')
+        : employeeController.registerEmployee(req, res);
 });
 
 /**
