@@ -59,9 +59,6 @@ router.post('/login', (req, res) => {
  * @argument res
  * @returns all the employees and their information from in the database
  */
-router.get('/getAllEmployees', (req, res) => {
-    logger.info(process.env.TILDA+ 'Inside /getAllEmployees '+process.env.GET+' method'+process.env.TILDA);
-    res.status(200).send('getAllEmployees route is working');
-});
+router.get('/getAllEmployees', employeeController.getAllEmployees);
 
 module.exports = router;
