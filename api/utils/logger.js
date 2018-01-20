@@ -5,7 +5,7 @@ const logger = new winston.Logger({
     transports: [
         new winston.transports.File({
             level: 'info',
-            filename: './logs/access.log',
+            filename: './access.log',
             handleExceptions: true,
             json: false,
             maxsize: 5242880, //5MB
