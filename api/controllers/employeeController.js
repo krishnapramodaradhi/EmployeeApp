@@ -1,7 +1,8 @@
 /**
- * Mongoose import
+ * Mongoose and jsonwebtoken import
  */
 const mongoose          = require('mongoose');
+const jwt               = require('jsonwebtoken');
 
 /**
  * Employee model for CRUD operations
@@ -16,7 +17,7 @@ const resultController   = require('../controllers/resultController');
 /**
  * A utilility for logging the results
  */
-const logger            = require('../utils/logger');
+const logger             = require('../utils/logger');
 
 /**
  * Exporting the module so that it can be used in other modules
@@ -43,7 +44,7 @@ module.exports = {
     },
     getAllEmployees: (req, res) => {
         Employee.find()
-            .select('employee_id employee_name password designation serviceLine role')
+            .select('employee_id employee_name designation serviceLine role')
             .exec()
             .then(result => {
                 resultController.success(res, 200, result);
@@ -51,5 +52,37 @@ module.exports = {
             .catch(err => {
                 resultController.error(res, err);
             })
+    },
+    loginEmployee: (req, res) => {
+        Employee.findOne({ employee_id: req.body.employee_id })
+            .select('employee_id password employee_name')
+            .exec()
+            .then(employee => {
+                const validPassword = employee.comparePassword(req.body.password);
+                if(!validPassword) {
+                    resultController.error(res, 'Invalid password');
+                } else {
+                    let token = jwt.sign({ employee_id: employee.employee_id }, process.env.SECRET, { expiresIn: '24h' });
+                    logger.info(token);
+                    res.status(200).json({
+                        success: true,
+                        message: 'Employee Authenticated!',
+                        token: token
+                    })
+                }
+            })
+            .catch(err => {
+                resultController.error(res, 'Auth Failed');
+            });
+    },
+    verifyToken: (req, res, token) => {
+        jwt.verify(token, process.env.SECRET, (err, decoded) => {
+            if(err) {
+                resultController.error(res, 'Invalid token: '+err);
+            } else {
+                logger.info(process.env.TILDA+ 'Token decoded'+ process.env.TILDA);
+                req.decoded = decoded;
+            }
+        })
     }
 }

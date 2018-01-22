@@ -46,18 +46,32 @@ router.post('/register', (req, res) => {
  * @returns a success or error message and the login information of the employee.
  */
 router.post('/login', (req, res) => {
-    logger.info(process.env.TILDA+ 'Inside /register '+process.env.POST+' method'+process.env.TILDA);
-    const employee = {
-        id: 4802402,
-        password: '*********'
-    }
-    res.status(200).json(employee);
+    logger.info(process.env.TILDA+ 'Inside /login '+process.env.POST+' method'+process.env.TILDA);
+    !req.body.employee_id ? resultController.error(res, 'No Username Provided')
+    :!req.body.password ? resultController.error(res, 'No Password provided')
+    :employeeController.loginEmployee(req, res);
 });
 
 /**
  * @argument req
  * @argument res
- * @returns all the employees and their information from in the database
+ * @argument next
+ * Middleware to decoded the generated token
+ * All the routes below this middleware require authentication
+ * All the routes above this middleware do not require auth
+ */
+router.use((req, res, next) => {
+    logger.info(process.env.TILDA+ 'Inside Token verification middleware' +process.env.TILDA);
+    const token = req.headers.authorization;
+    !token ? resultController.error(res, 'No token provided')
+    :employeeController.verifyToken(req, res, token);
+    next();
+})
+
+/**
+ * @argument req
+ * @argument res
+ * @returns all the employees and their information from the database
  */
 router.get('/getAllEmployees', employeeController.getAllEmployees);
 
