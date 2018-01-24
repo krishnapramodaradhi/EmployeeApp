@@ -20,6 +20,7 @@ const resultController     = require('../controllers/resultController');
   * Utilities goes here
   */
   const logger              = require('../utils/logger');
+  const constants          = require('../utils/errorCodes');
 
 /**
  * @argument req
@@ -30,7 +31,7 @@ const resultController     = require('../controllers/resultController');
 router.post('/register', (req, res) => {
     logger.info(process.env.TILDA+ 'Inside /register '+process.env.POST+' method'+process.env.TILDA);
         !req.body.employee_id && !req.body.employee_name && !req.body.password && !req.body.designation &&!req.body.serviceLine && !req.body.role ? resultController.error(res, 'Not all fields were          provided')
-        :!req.body.employee_id ? resultController.error(res, 'No EmployeeID was provided')
+        :!req.body.employee_id ? resultController.error(res, constants.R0001)
         :!req.body.employee_name ? resultController.error(res, 'No Employee name was provided')
         :!req.body.password ? resultController.error(res, 'No password was provided')
         :!req.body.designation ? resultController.error(res, 'No designation was provided')
@@ -47,7 +48,7 @@ router.post('/register', (req, res) => {
  */
 router.post('/login', (req, res) => {
     logger.info(process.env.TILDA+ 'Inside /login '+process.env.POST+' method'+process.env.TILDA);
-    !req.body.employee_id ? resultController.error(res, 'No Username Provided')
+    !req.body.employee_id ? resultController.error(res, 'No EmployeeID Provided')
     :!req.body.password ? resultController.error(res, 'No Password provided')
     :employeeController.loginEmployee(req, res);
 });
