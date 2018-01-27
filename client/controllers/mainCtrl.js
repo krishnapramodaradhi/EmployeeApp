@@ -7,7 +7,7 @@ angular.module('EmployeeApp')
             app.errorMsg = false;
             app.disabled = false;
             app.inputType = 'password';
-            
+
             if (!Employee.isLoggedIn()) {
                 Employee.designation()
                     .then(function (data) {
@@ -38,6 +38,7 @@ angular.module('EmployeeApp')
             })
 
             this.regEmployee = function (regData) {
+                $rootScope.errMsg = undefined;
                 app.disabled = true;
                 Employee.regEmployee(app.regData)
                     .then(function (data) {
@@ -56,6 +57,7 @@ angular.module('EmployeeApp')
             }
 
             this.login = function (loginData) {
+                $rootScope.errMsg = undefined;
                 app.disabled = true;
                 Employee.loginEmployee(app.loginData)
                     .then(function (data) {

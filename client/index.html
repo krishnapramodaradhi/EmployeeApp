@@ -61,6 +61,14 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+    <div class="alert alert-danger rootAlert" role="alert" ng-show="errMsg">
+        <div class="container">
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <span>{{errMsg}}</span>
+        </div>
+    </div>
 
     <div class="container">
         <div class="panel panel-default col-xs-12 col-sm-12 col-md-8 col-md-offset-2">

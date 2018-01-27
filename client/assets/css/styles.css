@@ -153,3 +153,7 @@ a, a:hover {
 .icon {
         padding: 0 10px;
 }
+
+.rootAlert {
+        margin-top: -20px;
+}
