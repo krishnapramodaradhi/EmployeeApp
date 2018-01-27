@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
-<body>
+<body ng-controller="mainCtrl as main">
     <nav class="navbar navbar-default fixed-top">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -44,10 +44,16 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="login">Login</a>
+                        <a href="login" ng-hide="main.isLoggedIn">Login</a>
                     </li>
                     <li>
-                        <a href="register">Register</a>
+                        <a href="register" ng-hide="main.isLoggedIn">Register</a>
+                    </li>
+                    <li>
+                        <a href="dashboard" ng-show="main.isLoggedIn">Welcome, {{main.name | uppercase}}</a>
+                    </li>
+                    <li>
+                        <a href="#" ng-click="main.logout()" ng-show="main.isLoggedIn">Logout</a>
                     </li>
                 </ul>
             </div>

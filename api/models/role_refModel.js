@@ -6,9 +6,9 @@ const mongoose          = require('mongoose');
 /**
  * Creating a new Schema
  */
-const designationSchema = mongoose.Schema({
+const roleSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    option: {
+    role: {
         type: String,
         required: true
     }
@@ -17,4 +17,4 @@ const designationSchema = mongoose.Schema({
 /**
  * Exporting this model so that it can be used in other modules
  */
-module.exports = mongoose.model('Designation', designationSchema);
+module.exports = mongoose.model('Role', roleSchema);

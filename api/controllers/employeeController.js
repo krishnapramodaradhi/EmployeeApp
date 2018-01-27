@@ -58,21 +58,26 @@ module.exports = {
             .select('employee_id password employee_name')
             .exec()
             .then(employee => {
-                const validPassword = employee.comparePassword(req.body.password);
-                if (!validPassword) {
-                    resultController.error(res, 'Invalid password');
-                } else {
-                    let token = jwt.sign({ employee_id: employee.employee_id }, process.env.SECRET, { expiresIn: '24h' });
-                    logger.info(token);
-                    res.status(200).json({
-                        success: true,
-                        message: 'Employee Authenticated!',
-                        token: token
-                    })
+                let validPassword;
+                if (!employee) {
+                    resultController.error(res, 'Could not authenticate user');
+                } else if (employee) {
+                    !req.body.password ? resultController.error(res, 'No password provided')
+                        : validPassword = employee.comparePassword(req.body.password);
+                    if (!validPassword) {
+                        resultController.error(res, 'Invalid Password');
+                    } else {
+                        let token = jwt.sign({ employee_id: employee.employee_id, employee_name: employee.employee_name }, process.env.SECRET, { expiresIn: '24h' });
+                        res.status(200).json({
+                            success: true,
+                            message: 'Employee Authenticated!',
+                            token: token
+                        });
+                    }
                 }
             })
             .catch(err => {
-                resultController.error(res, 'Auth Failed');
+                resultController.error(res, err);
             });
     },
     verifyToken: (req, res, token) => {

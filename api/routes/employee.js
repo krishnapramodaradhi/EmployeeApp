@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
  */
 const Employee = require('../models/employeeModel');
 const Designation = require('../models/designation_refModel');
+const Role = require('../models/role_refModel');
 
 /**
  * Controllers goes here
@@ -59,8 +60,23 @@ router.post('/login', (req, res) => {
  * @argument res
  * @returns all the employees and their information from the database
  */
-router.get('/reference', (req, res) => {
+router.get('/reference/designations', (req, res) => {
     Designation.find().exec()
+        .then(result => {
+            resultController.success(res, 200, result);
+        })
+        .catch(err => {
+            resultController.error(res, err);
+        });
+});
+
+/**
+ * @argument req
+ * @argument res
+ * @returns all the employees and their information from the database
+ */
+router.get('/reference/roles', (req, res) => {
+    Role.find().exec()
         .then(result => {
             resultController.success(res, 200, result);
         })
@@ -79,11 +95,20 @@ router.get('/reference', (req, res) => {
  */
 router.use((req, res, next) => {
     logger.info(process.env.TILDA + 'Inside Token verification middleware' + process.env.TILDA);
-    const token = req.headers.authorization;
+    const token = req.headers['x-access-token'];
     !token ? resultController.error(res, 'No token provided')
         : employeeController.verifyToken(req, res, token);
     next();
-})
+});
+
+/**
+ * @argument req
+ * @argument res
+ * This route helps the user to be loggedIn even after page refresh
+ */
+router.post('/me', (req, res) => {
+    resultController.success(res, 200, req.decoded);
+});
 
 /**
  * @argument req

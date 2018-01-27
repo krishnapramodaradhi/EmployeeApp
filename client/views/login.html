@@ -1,35 +1,37 @@
 <div class="page-header">
     <h3 class="heading-register">Employee Login</h3>
 </div>
-<form>
+<div ng-class="main.alert" role="alert" ng-show="main.successMsg || main.errorMsg">
+    <button type="button" class="close" ng-click="main.hideAlert()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <span class="icon" ng-class="main.icon"></span>{{ main.successMsg || main.errorMsg }}<span ng-show="main.successMsg">...redirecting to /dashboard</span>
+</div>
+<form ng-submit="main.login(loginData)">
     <div class="form-group input-group-sm">
         <label for="employee_id">Employee ID
             <span class="required">*</span>
         </label>
-        <input type="text" class="form-control" name="employee_id" id="employee_id">
+        <input type="text" class="form-control" name="employee_id" id="employee_id" ng-model="main.loginData.employee_id">
     </div>
     <div class="form-group input-group-sm">
         <label for="password">Password
             <span class="required">*</span>
         </label>
-        <input type="text" class="form-control" name="password" id="password">
+        <input type="{{main.inputType}}" class="form-control" name="password" id="password" ng-model="main.loginData.password">
     </div>
-    <div class="">
-        <div class="form-group col-xs-12 col-sm-12 col-md-6 forgot">
-            <label class="show">Show Password
-                <input type="checkbox">
-                <span class="checkmark"></span>
-            </label>
-        </div>
-        <div class="form-group forgot pull-right">
-            <input type="button" value="Login" class="btn btn-primary">
-        </div>
+    <div class="form-group col-xs-12 col-sm-12 col-md-6 forgot">
+        <label class="show">Show Password
+            <input type="checkbox" ng-click="main.showPassword()">
+            <span class="checkmark"></span>
+        </label>
+    </div>
+    <div class="form-group forgot pull-right">
+        <button type="submit" class="btn btn-primary">Login</button>
     </div>
 </form>
-<div class="text-center col-md-12 forgot">
-    <a href="#">Forgot Employee ID or Password?</a>
-</div>
-<div class="text col-md-12 text-center">
+
+<div class="col-xs-12 col-sm-12 col-md-12 text-center text">
     Don't have an account? Please
     <a href="register">Register</a> here.
 </div>
