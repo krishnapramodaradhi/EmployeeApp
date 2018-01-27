@@ -1,26 +1,27 @@
 /**
  * Express framework goes here
  */
-const express               = require('express');
-const router                = express.Router();
-const mongoose              = require('mongoose');
+const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose');
 
 /**
  * Model imports goes here
  */
-const Employee              = require('../models/employeeModel');
+const Employee = require('../models/employeeModel');
+const Designation = require('../models/designation_refModel');
 
 /**
  * Controllers goes here
  */
-const employeeController  = require('../controllers/employeeController');
-const resultController     = require('../controllers/resultController');
+const employeeController = require('../controllers/employeeController');
+const resultController = require('../controllers/resultController');
 
- /**
-  * Utilities goes here
-  */
-  const logger              = require('../utils/logger');
-  const constants          = require('../utils/errorCodes');
+/**
+ * Utilities goes here
+ */
+const logger = require('../utils/logger');
+const constants = require('../utils/errorCodes');
 
 /**
  * @argument req
@@ -29,15 +30,15 @@ const resultController     = require('../controllers/resultController');
  * @returns a success or error message based on the request
  */
 router.post('/register', (req, res) => {
-    logger.info(process.env.TILDA+ 'Inside /register '+process.env.POST+' method'+process.env.TILDA);
-        !req.body.employee_id && !req.body.employee_name && !req.body.password && !req.body.designation &&!req.body.serviceLine && !req.body.role ? resultController.error(res, 'Not all fields were          provided')
-        :!req.body.employee_id ? resultController.error(res, constants.R0001)
-        :!req.body.employee_name ? resultController.error(res, 'No Employee name was provided')
-        :!req.body.password ? resultController.error(res, 'No password was provided')
-        :!req.body.designation ? resultController.error(res, 'No designation was provided')
-        :!req.body.serviceLine ? resultController.error(res, 'No service line was provided')
-        :!req.body.role ? resultController.error(res, 'No role was provided')
-        : employeeController.registerEmployee(req, res);
+    logger.info(process.env.TILDA + 'Inside /register ' + process.env.POST + ' method' + process.env.TILDA);
+    !req.body.employee_id && !req.body.employee_name && !req.body.password && !req.body.designation && !req.body.serviceLine && !req.body.role ? resultController.error(res, 'Not all fields were provided')
+        : !req.body.employee_id ? resultController.error(res, constants.R0001)
+            : !req.body.employee_name ? resultController.error(res, 'No Employee name was provided')
+                : !req.body.password ? resultController.error(res, 'No password was provided')
+                    : !req.body.designation ? resultController.error(res, 'No designation was provided')
+                        : !req.body.serviceLine ? resultController.error(res, 'No service line was provided')
+                            : !req.body.role ? resultController.error(res, 'No role was provided')
+                                : employeeController.registerEmployee(req, res);
 });
 
 /**
@@ -47,10 +48,25 @@ router.post('/register', (req, res) => {
  * @returns a success or error message and the login information of the employee.
  */
 router.post('/login', (req, res) => {
-    logger.info(process.env.TILDA+ 'Inside /login '+process.env.POST+' method'+process.env.TILDA);
+    logger.info(process.env.TILDA + 'Inside /login ' + process.env.POST + ' method' + process.env.TILDA);
     !req.body.employee_id ? resultController.error(res, 'No EmployeeID Provided')
-    :!req.body.password ? resultController.error(res, 'No Password provided')
-    :employeeController.loginEmployee(req, res);
+        : !req.body.password ? resultController.error(res, 'No Password provided')
+            : employeeController.loginEmployee(req, res);
+});
+
+/**
+ * @argument req
+ * @argument res
+ * @returns all the employees and their information from the database
+ */
+router.get('/reference', (req, res) => {
+    Designation.find().exec()
+        .then(result => {
+            resultController.success(res, 200, result);
+        })
+        .catch(err => {
+            resultController.error(res, err);
+        });
 });
 
 /**
@@ -62,10 +78,10 @@ router.post('/login', (req, res) => {
  * All the routes above this middleware do not require auth
  */
 router.use((req, res, next) => {
-    logger.info(process.env.TILDA+ 'Inside Token verification middleware' +process.env.TILDA);
+    logger.info(process.env.TILDA + 'Inside Token verification middleware' + process.env.TILDA);
     const token = req.headers.authorization;
     !token ? resultController.error(res, 'No token provided')
-    :employeeController.verifyToken(req, res, token);
+        : employeeController.verifyToken(req, res, token);
     next();
 })
 

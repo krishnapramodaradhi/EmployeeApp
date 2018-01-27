@@ -10,7 +10,7 @@ const path          = require('path');
 /**
  * DB connection goes here
  */
-//const db            = require('./api/utils/db');
+const db            = require('./api/utils/db');
 
 /**
  * routes goes here

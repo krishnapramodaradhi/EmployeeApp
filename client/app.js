@@ -1,12 +1,17 @@
 'use strict';
-angular.module('EmployeeApp', ['ngRoute'])
+angular.module('EmployeeApp', ['angular-loading-bar','ngRoute'])
     .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
         $routeProvider
             .when('/', {
-                templateUrl: 'views/register.html'
+                templateUrl: 'views/home.html'
             })
             .when('/login', {
                 templateUrl: 'views/login.html'
+            })
+            .when('/register', {
+                templateUrl: 'views/register.html',
+                controller: 'mainCtrl',
+                controllerAs: 'main'
             })
             .when('/dashboard', {
                 templateUrl: 'views/dashboard.html'

@@ -15,12 +15,16 @@
     <!-- Google Fonts(Product Sans) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Product+Sans">
 
+    <!-- CSS for progress bar -->
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css' type='text/css'
+        media='all' />
+
     <!-- Custom css -->
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
-<body ng-controller="mainCtrl as main">
-    <nav class="navbar navbar-default fixed-top" ng-hide="main.hide">
+<body>
+    <nav class="navbar navbar-default fixed-top">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -31,7 +35,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/"><span class="heading">EmployeeApp</span></a>
+                <a class="navbar-brand" href="/">
+                    <span class="heading">EmployeeApp</span>
+                </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -41,7 +47,7 @@
                         <a href="login">Login</a>
                     </li>
                     <li>
-                        <a href="/">Register</a>
+                        <a href="register">Register</a>
                     </li>
                 </ul>
             </div>
@@ -64,11 +70,17 @@
 
     <!-- Angular's core javascript -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.js"></script>
+
     <!-- Angular router -->
     <script src="https://code.angularjs.org/1.6.7/angular-route.js"></script>
+
+    <!-- Angular progress bar -->
+    <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
+
     <!-- Angular JavaScript required for the current application -->
     <script src="app.js"></script>
     <script src="controllers/mainCtrl.js"></script>
+    <script src="services/employee-service.js"></script>
 </body>
 
 </html>
