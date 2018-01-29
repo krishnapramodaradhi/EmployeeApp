@@ -21,6 +21,9 @@ angular.module('EmployeeApp')
                     return { message: 'User has no token' };
                 }
             },
+            getAllEmployees: function () {
+                return $http.get('/employee/getAllEmployees');
+            },
             logout: function () {
                 AuthToken.removeToken();
             },

@@ -1,1 +1,58 @@
-<h1>Hello from dashboard</h1>
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="heading-register space">Employee Dashboard</h3>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control input-group-sm" name="search" ng-model="searchEmployees" placeholder="Search all employees">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="search">Apply a custom filter
+                <small class="opacity">Current Limit:
+                    <span ng-show="main.limit">{{main.limit}}</span>
+                    <span ng-hide="main.limit">No Limit Applied</span>
+                </small>
+            </label>
+            <input type="text" class="form-control input-group-sm" name="searchEmployees" id="searchEmployees" placeholder="Please enter the number of records to display"
+                ng-model="number">
+        </div>
+    </div>
+    <div class="col-md-6 filter">
+        <button type="submit" ng-click="main.showMore(number)" class="btn btn-success">Apply Filter</button>
+        <button type="submit" ng-click="main.showAll()" class="btn btn-primary">Show All</button>
+    </div>
+</div>
+<div class="page-header space">
+    <h4 class="sub-heading-register">Employee Details</h4>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>EMPLOYEE ID</th>
+                <th>EMPLOYEE NAME</th>
+                <th>DESIGNATION</th>
+                <th>SERVICE LINE</th>
+                <th>ROLE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="employee in main.employees | filter:searchEmployees | limitTo:main.limit">
+                <td>{{$index + 1}}</td>
+                <td>{{employee.employee_id}}</td>
+                <td>{{employee.employee_name | uppercase}}</td>
+                <td>{{employee.designation}}</td>
+                <td>{{employee.serviceLine}}</td>
+                <td>{{employee.role}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="panel-footer">
+        Total no.of records: {{main.employees.length}}
+    </div>
+</div>

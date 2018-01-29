@@ -1,4 +1,4 @@
-
+'use strict';
 angular.module('EmployeeApp')
     .controller('mainCtrl', ['$log', '$location', '$timeout', '$rootScope', 'Employee', 'AuthToken',
         function ($log, $location, $timeout, $rootScope, Employee, AuthToken) {
@@ -7,6 +7,7 @@ angular.module('EmployeeApp')
             app.errorMsg = false;
             app.disabled = false;
             app.inputType = 'password';
+            app.limit = 5;
 
             if (!Employee.isLoggedIn()) {
                 Employee.designation()
@@ -30,6 +31,10 @@ angular.module('EmployeeApp')
                     Employee.getEmployee()
                         .then(function (data) {
                             app.name = data.data.message.employee_name;
+                        });
+                    Employee.getAllEmployees()
+                        .then(function (data) {
+                            app.employees = data.data.message;
                         })
                 } else {
                     app.isLoggedIn = false;
@@ -92,6 +97,14 @@ angular.module('EmployeeApp')
                 } else {
                     app.inputType = 'password';
                 }
+            }
+
+            this.showMore = function (number) {
+                (number > 0) ? app.limit = number : app.errorMsg = 'Please enter a number greater than zero';
+            }
+
+            this.showAll = function () {
+                app.limit = undefined;
             }
 
         }]);
