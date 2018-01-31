@@ -31,15 +31,15 @@ angular.module('EmployeeApp', ['angular-loading-bar', 'ngRoute'])
     }])
     .run(function ($rootScope, $log, $location, Employee) {
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
-            if(next.$$route.aunthentication) {
-                if(!Employee.isLoggedIn()) {
-                    $rootScope.errMsg = 'You\'re not authorized to access '+$location.url()+' route. Please Login to continue.';
+            if (next.$$route.aunthentication) {
+                if (!Employee.isLoggedIn()) {
+                    $rootScope.errMsg = 'You\'re not authorized to access ' + $location.url() + ' route. Please Login to continue.';
                     event.preventDefault();
                     $location.path('/login');
                 }
             } else {
-                if(Employee.isLoggedIn()) {
-                    $rootScope.errMsg = 'Cannot access '+$location.url()+'. You\'re already authorized';
+                if (Employee.isLoggedIn()) {
+                    $rootScope.errMsg = 'Cannot access ' + $location.url() + '. You\'re already authorized';
                     event.preventDefault();
                     $location.path('/dashboard');
                 }

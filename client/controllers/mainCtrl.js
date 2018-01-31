@@ -8,6 +8,11 @@ angular.module('EmployeeApp')
             app.disabled = false;
             app.inputType = 'password';
             app.limit = 5;
+            var loading_screen = pleaseWait({
+                logo: "assets/images/employee.png",
+                backgroundColor: '#f46d3b',
+                loadingHtml: "<div class='sk-spinner sk-spinner-wave'><div class='sk-rect1'></div><div class='sk-rect2'></div><div class='sk-rect3'></div><div class='sk-rect4'></div><div class='sk-rect5'></div></div>"
+              });
 
             if (!Employee.isLoggedIn()) {
                 Employee.designation()
@@ -47,14 +52,14 @@ angular.module('EmployeeApp')
                 app.disabled = true;
                 Employee.regEmployee(app.regData)
                     .then(function (data) {
-                        app.icon = 'glyphicon glyphicon-ok';
+                        app.icon = 'glyphicon glyphicon-ok-sign';
                         app.alert = 'alert alert-success alert-dismissible';
                         app.successMsg = data.data.message;
                         $timeout(() => {
                             $location.path('/login');
                         }, 3000);
                     }, function (err) {
-                        app.icon = 'glyphicon glyphicon-remove';
+                        app.icon = 'glyphicon glyphicon-remove-sign';
                         app.alert = 'alert alert-danger alert-dismissible';
                         app.errorMsg = err.data.message;
                         app.disabled = false;
@@ -66,7 +71,7 @@ angular.module('EmployeeApp')
                 app.disabled = true;
                 Employee.loginEmployee(app.loginData)
                     .then(function (data) {
-                        app.icon = 'glyphicon glyphicon-ok';
+                        app.icon = 'glyphicon glyphicon-ok-sign';
                         app.alert = 'alert alert-success alert-dismissible';
                         app.successMsg = data.data.message;
                         AuthToken.setToken(data.data.token);
@@ -74,7 +79,7 @@ angular.module('EmployeeApp')
                             $location.path('/dashboard');
                         }, 3000);
                     }, function (err) {
-                        app.icon = 'glyphicon glyphicon-remove';
+                        app.icon = 'glyphicon glyphicon-remove-sign';
                         app.alert = 'alert alert-danger alert-dismissible';
                         app.errorMsg = err.data.message;
                         app.disabled = false;
@@ -106,5 +111,7 @@ angular.module('EmployeeApp')
             this.showAll = function () {
                 app.limit = undefined;
             }
+
+            loading_screen.finish();
 
         }]);

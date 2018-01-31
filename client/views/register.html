@@ -1,11 +1,12 @@
-<div class="page-header">
-    <h3 class="heading-register">Employee Reg.</h3>
+<div class="page-header panel panel-default custom-panel">
+    <h3 class="heading-register container">Employee Registration</h3>
 </div>
 <div ng-class="main.alert" role="alert" ng-show="main.successMsg || main.errorMsg">
     <button type="button" class="close" ng-click="main.hideAlert()">
         <span aria-hidden="true">&times;</span>
     </button>
-    <span class="icon" ng-class="main.icon"></span>{{ main.successMsg || main.errorMsg }}<span ng-show="main.successMsg">...redirecting to /login</span>
+    <span class="icon" ng-class="main.icon"></span>{{ main.successMsg || main.errorMsg }}
+    <span ng-show="main.successMsg">...redirecting to /login</span>
 </div>
 <form ng-submit="main.regEmployee()">
     <div class="form-group input-group-sm col-xs-12 col-sm-6 col-md-6">
@@ -24,7 +25,8 @@
         <label for="designation">Designation
             <span class="required">*</span>
         </label>
-        <select class="form-control" name="designation" id="designation" ng-model="main.regData.designation" ng-options="des.option as des.option for des in main.designations" ng-disabled="main.disabled">
+        <select class="form-control" name="designation" id="designation" ng-model="main.regData.designation" ng-options="des.option as des.option for des in main.designations"
+            ng-disabled="main.disabled">
             <option value="">Select an option</option>
         </select>
     </div>
@@ -32,7 +34,8 @@
         <label for="role">Role
             <span class="required">*</span>
         </label>
-        <select class="form-control" name="role" id="role" ng-model="main.regData.role" ng-options="r.role as r.role for r in main.roles" ng-disabled="main.disabled">
+        <select class="form-control" name="role" id="role" ng-model="main.regData.role" ng-options="r.role as r.role for r in main.roles"
+            ng-disabled="main.disabled">
             <option value="">Select an option</option>
         </select>
     </div>

@@ -6,6 +6,7 @@ const app           = express();
 const bodyParser    = require('body-parser');
 const dotenv        = require('dotenv').config();
 const path          = require('path');
+const favicon       = require('serve-favicon');
 
 /**
  * DB connection goes here
@@ -20,6 +21,7 @@ const employee      = require('./api/routes/employee');
 /**
  * Middlewares that'll accept json and url encoded data
  */
+app.use(favicon(path.join(__dirname, 'client', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

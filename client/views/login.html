@@ -1,5 +1,5 @@
-<div class="page-header">
-    <h3 class="heading-register">Employee Login</h3>
+<div class="page-header panel panel-default custom-panel">
+    <h3 class="heading-register container">Employee Login</h3>
 </div>
 <div ng-class="main.alert" role="alert" ng-show="main.successMsg || main.errorMsg">
     <button type="button" class="close" ng-click="main.hideAlert()">
@@ -7,7 +7,7 @@
     </button>
     <span class="icon" ng-class="main.icon"></span>{{ main.successMsg || main.errorMsg }}<span ng-show="main.successMsg">...redirecting to /dashboard</span>
 </div>
-<form ng-submit="main.login(loginData)">
+<form ng-submit="main.login(loginData)" class="col-md-8 col-md-offset-2">
     <div class="form-group input-group-sm">
         <label for="employee_id">Employee ID
             <span class="required">*</span>
