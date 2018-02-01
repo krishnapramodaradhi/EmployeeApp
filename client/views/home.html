@@ -7,10 +7,10 @@
         <p ng-hide="main.isLoggedIn">Signing up doesn't cost you anything coz it's free. Please sign up by clicking the below button.</p>
         <p ng-hide="!main.isLoggedIn">Welcome to EmployeeApp. Here you can find Loremsum Ipsum and all that stuff. </p>
         <p ng-hide="main.isLoggedIn">
-            <a href="register" class="btn btn-primary btn-lg">Sign Up</a>
+            <a href="register" class="btn btn-primary btn-lg" data-toggle="tooltip" data-placement="bottom" title="Please signup to continue">Sign Up</a>
         </p>
         <p ng-hide="!main.isLoggedIn">
-            <a href="dashboard" class="btn btn-success btn-lg">Explore</a>
+            <a href="dashboard" class="btn btn-success btn-lg" data-toggle="tooltip" data-placement="bottom" title="Click here to go to dashboard">Explore</a>
         </p>
     </div>
 </div>
