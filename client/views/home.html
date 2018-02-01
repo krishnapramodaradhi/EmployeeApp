@@ -1,1 +1,16 @@
-<h1>Hello from home route</h1>
+<div class="panel panel-default col-xs-12 col-sm-12 col-md-10 col-md-offset-1">
+    <div class="spacing jumbotron">
+        <h2 ng-hide="main.isLoggedIn">Hello, Employee!</h2>
+        <h2 ng-hide="!main.isLoggedIn">Hello,
+            <strong>{{ main.name | uppercase}}!</strong>
+        </h2>
+        <p ng-hide="main.isLoggedIn">Signing up doesn't cost you anything coz it's free. Please sign up by clicking the below button.</p>
+        <p ng-hide="!main.isLoggedIn">Welcome to EmployeeApp. Here you can find Loremsum Ipsum and all that stuff. </p>
+        <p ng-hide="main.isLoggedIn">
+            <a href="register" class="btn btn-primary btn-lg">Sign Up</a>
+        </p>
+        <p ng-hide="!main.isLoggedIn">
+            <a href="dashboard" class="btn btn-success btn-lg">Explore</a>
+        </p>
+    </div>
+</div>

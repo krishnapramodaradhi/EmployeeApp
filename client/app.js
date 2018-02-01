@@ -1,9 +1,12 @@
 'use strict';
-angular.module('EmployeeApp', ['angular-loading-bar', 'ngRoute'])
+angular.module('EmployeeApp', ['angular-loading-bar', 'ngRoute', 'ngAnimate'])
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'views/home.html'
+                templateUrl: 'views/home.html',
+                controller: function ($scope) {
+                    $scope.pageClass = 'page-home';
+                }
             })
             .when('/login', {
                 templateUrl: 'views/login.html',
@@ -31,13 +34,13 @@ angular.module('EmployeeApp', ['angular-loading-bar', 'ngRoute'])
     }])
     .run(function ($rootScope, $log, $location, Employee) {
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
-            if (next.$$route.aunthentication) {
+            if (next.$$route.aunthentication === true) {
                 if (!Employee.isLoggedIn()) {
                     $rootScope.errMsg = 'You\'re not authorized to access ' + $location.url() + ' route. Please Login to continue.';
                     event.preventDefault();
                     $location.path('/login');
                 }
-            } else {
+            } else if(next.$$route.aunthentication === false) {
                 if (Employee.isLoggedIn()) {
                     $rootScope.errMsg = 'Cannot access ' + $location.url() + '. You\'re already authorized';
                     event.preventDefault();

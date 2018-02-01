@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 /**
  * Mongoose connection goes here
  */
-mongoose.connect(`mongodb://root:root@cluster0-shard-00-00-kq8ud.mongodb.net:27017,cluster0-shard-00-01-kq8ud.mongodb.net:27017,cluster0-shard-00-02-kq8ud.mongodb.net:27017/EmployeeApp?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin`)
+mongoose.connect(`mongodb://localhost:27017/EmployeeApp`)
     .then(() => {
         logger.info('Connection established');
     })

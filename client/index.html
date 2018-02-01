@@ -9,8 +9,8 @@
     <!-- All the url's must begin with / -->
     <base href="/">
 
-    <!-- Please wait CSS -->
-    <link rel="stylesheet" href="assets/css/please-wait.css">
+    <!-- Please wait CSS
+    <link rel="stylesheet" href="assets/css/please-wait.css"> -->
 
     <!-- Bootstrap's core css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -75,14 +75,11 @@
     </div>
 
     <div class="container">
-        <div ng-include="assets/views/partial.html"></div>
-        <div class="panel panel-default col-xs-12 col-sm-12 col-md-10 col-md-offset-1">
-            <div class="inner" ng-view></div>
-        </div>
+        <div class="inner page {{pageClass}}" ng-view></div>
     </div>
 
-    <!-- Please wait plugin -->
-    <script src="assets/js/please-wait.js"></script>
+    <!-- Please wait plugin
+    <script src="assets/js/please-wait.js"></script> -->
 
     <!-- jQuery plugin for bootstrap core javascript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -91,10 +88,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
 
     <!-- Angular's core javascript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
 
     <!-- Angular router -->
-    <script src="https://code.angularjs.org/1.6.7/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.js"></script>
+
+    <!-- Angular Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-animate.js"></script>
 
     <!-- Angular progress bar -->
     <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
