@@ -11,7 +11,7 @@ const favicon       = require('serve-favicon');
 /**
  * DB connection goes here
  */
-//const db            = require('./api/utils/db');
+const db            = require('./api/utils/db');
 const dbLoc         = require('./api/utils/dbLocal');
 
 /**

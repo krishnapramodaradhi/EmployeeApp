@@ -8,6 +8,8 @@ const jwt = require('jsonwebtoken');
  * Employee model for CRUD operations
  */
 const Employee = require('../models/employeeModel');
+const Designation = require('../models/designation_refModel');
+const Role = require('../models/role_refModel');
 
 /**
  * This controller returns the success or error messages based on the request
@@ -18,6 +20,7 @@ const resultController = require('../controllers/resultController');
  * A utilility for logging the results
  */
 const logger = require('../utils/logger');
+const validations = require('../utils/errorCodes');
 
 /**
  * Exporting the module so that it can be used in other modules
@@ -34,12 +37,12 @@ module.exports = {
             employee.role = req.body.role
         employee.save()
             .then(result => {
-                resultController.success(res, 201, 'Employee created successfully');
+                resultController.success(res, 201, validations.success.EASREG);
             }).catch(err => {
-                err.code === 11000 ? resultController.error(res, 'EmployeeID already exists in the database')
+                err.code === 11000 ? resultController.error(res, validations.errors.EAIDUNIQUE)
                     : err.errors.employee_id ? resultController.error(res, err.errors.employee_id.message)
                         : err.errors.password ? resultController.error(res, err.errors.password.message)
-                            : resultController.error(res, 'Could not save user');
+                            : resultController.error(res, validations.errors.EAREG);
             });
     },
     getAllEmployees: (req, res) => {
@@ -60,17 +63,17 @@ module.exports = {
             .then(employee => {
                 let validPassword;
                 if (!employee) {
-                    resultController.error(res, 'Could not authenticate user');
+                    resultController.error(res, validations.errors.EAAUTH);
                 } else if (employee) {
-                    !req.body.password ? resultController.error(res, 'No password provided')
+                    !req.body.password ? resultController.error(res, validations.required.EAPASS)
                         : validPassword = employee.comparePassword(req.body.password);
                     if (!validPassword) {
-                        resultController.error(res, 'Invalid Password');
+                        resultController.error(res, validations.errors.EAINVALIDPASS);
                     } else {
                         let token = jwt.sign({ employee_id: employee.employee_id, employee_name: employee.employee_name }, process.env.SECRET, { expiresIn: '24h' });
                         res.status(200).json({
                             success: true,
-                            message: 'Employee Authenticated!',
+                            message: validations.success.EASAUTH,
                             token: token
                         });
                     }
@@ -89,5 +92,28 @@ module.exports = {
                 req.decoded = decoded;
             }
         })
+    },
+    referenceDesignations: (req, res) => {
+        Designation.find().exec()
+            .then(result => {
+                res.set('Cache-Control', 'public, max-age=86400');
+                resultController.success(res, 200, result);
+            })
+            .catch(err => {
+                resultController.error(res, err);
+            });
+    },
+    referenceRoles: (req, res) => {
+        Role.find().exec()
+            .then(result => {
+                res.set('Cache-Control', 'public, max-age=86400');
+                resultController.success(res, 200, result);
+            })
+            .catch(err => {
+                resultController.error(res, err);
+            });
+    },
+    profile: (req, res) => {
+        resultController.success(res, 200, req.decoded);
     }
 }

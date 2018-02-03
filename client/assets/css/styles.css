@@ -62,7 +62,6 @@ input {
 .panel {
         border: 0;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, .5);
-        background-clip: padding-box;
         border-radius: 5px;
         margin-top: 50px;
 }
@@ -258,9 +257,25 @@ input {
         margin-bottom: 20px;
 }
 
-.jumbotron {
+#background {
         text-align: center;
-        background-color: #fff;
+        padding: 70px;
+        background-image: url('/assets/images/mean.jpeg');
+        /* background-color: #54bd56a9; */
+        background-repeat: no-repeat;
+        background-size: cover;
+}
+
+#background .jumbotron {
+        border-radius: 20px;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.75);
+        max-width: 800px;
+        margin: 0 auto;
+}
+
+.bree {
+        font-family: "Bree Serif", Arial, Helvetica, sans-serif;
 }
 
 .pageNotFound {
@@ -273,4 +288,19 @@ input {
 
 .rootAlert {
         margin-top: -20px;
+}
+
+.pad {
+        padding: 0;
+}
+.site-section {
+        text-align: center;
+ }
+
+ #why img{
+        max-height: 50px;
+}
+
+#why .item{
+        margin-top: 15px;
 }

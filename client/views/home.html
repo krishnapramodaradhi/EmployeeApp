@@ -1,16 +1,38 @@
-<div class="panel panel-default col-xs-12 col-sm-12 col-md-10 col-md-offset-1">
-    <div class="spacing jumbotron">
-        <h2 ng-hide="main.isLoggedIn">Hello, Employee!</h2>
-        <h2 ng-hide="!main.isLoggedIn">Hello,
-            <strong>{{ main.name | uppercase}}!</strong>
-        </h2>
-        <p ng-hide="main.isLoggedIn">Signing up doesn't cost you anything coz it's free. Please sign up by clicking the below button.</p>
-        <p ng-hide="!main.isLoggedIn">Welcome to EmployeeApp. Here you can find Loremsum Ipsum and all that stuff. </p>
-        <p ng-hide="main.isLoggedIn">
-            <a href="register" class="btn btn-primary btn-lg" data-toggle="tooltip" data-placement="bottom" title="Please signup to continue">Sign Up</a>
-        </p>
-        <p ng-hide="!main.isLoggedIn">
-            <a href="dashboard" class="btn btn-success btn-lg" data-toggle="tooltip" data-placement="bottom" title="Click here to go to dashboard">Explore</a>
-        </p>
+<div class="panel panel-default col-xs-12 col-sm-12 col-md-10 col-md-offset-1 pad">
+    <div id="background">
+        <div class="spacing jumbotron">
+            <h2 class="bree">The <span class="bree">M.E.A.N</span> Stack</h2>
+            <p ng-hide="main.isLoggedIn">
+                <a href="register" class="btn btn-primary btn-lg" data-toggle="tooltip" data-placement="bottom" title="Please signup to continue">Sign Up</a>
+            </p>
+            <p ng-hide="!main.isLoggedIn">
+                <a href="dashboard" class="btn btn-success btn-lg" data-toggle="tooltip" data-placement="bottom" title="Click here to go to dashboard">Explore</a>
+            </p>
+        </div>
+    </div>
+    <div>
+        <div id="why" class="site-section">
+            <div class="row">
+                <div class="col-md-3 item">
+                    <img src="assets/images/mongodb.jpg" alt="mongodb" class="mean">
+                    <p>MongoDB is the leading NoSQL database, empowering businesses to be more agile and scalable.</p>
+                </div>
+                <div class="col-md-3 item">
+                    <img src="assets/images/expressjs.png" alt="mongodb" class="mean">
+                    <p>Express is a minimal and flexible node.js web application framework, providing a robust set of features
+                        for building single and multi-page, and hybrid web applications.</p>
+                </div>
+                <div class="col-md-3 item">
+                    <img src="assets/images/angularjs.png" alt="mongodb" class="mean">
+                    <p>AngularJS lets you extend HTML vocabulary for your application. The resulting environment is extraordinarily
+                        expressive, readable, and quick to develop.</p>
+                </div>
+                <div class="col-md-3 item">
+                    <img src="assets/images/nodejs.png" alt="mongodb" class="mean">
+                    <p>Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network
+                        applications.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

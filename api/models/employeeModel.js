@@ -5,6 +5,11 @@ const mongoose          = require('mongoose');
 const bcrypt            = require('bcrypt-nodejs');
 
 /**
+ * Utilities goes here
+ */
+const validations = require('../utils/errorCodes');
+
+/**
  * ID validators goes here
  */
 //function to check the length of the id
@@ -29,11 +34,11 @@ let validID = (id) => {
 const idValidator = [
     {
         validator: idLengthChecker,
-        message: 'Employee ID should be exactly 6 digits'
+        message: validations.DB.EAIDLENGTH
     },
     {
         validator: validID,
-        message: 'Employee ID should contain only digits'
+        message: validations.DB.EAVALIDID
     }
 ]
 
@@ -62,11 +67,11 @@ let validPassword = (password) => {
 const passwordValidator = [
     {
         validator: passwordLengthChecker,
-        message: 'Password must be aleast 8 characters and not more than 15'
+        message: validations.DB.EAPASSLENGTH
     },
     {
         validator: validPassword,
-        message: 'Password must have at least one uppercase, lowercase, special character, and number'
+        message: validations.DB.EAVALIDPASS
     }
 ]
 /**

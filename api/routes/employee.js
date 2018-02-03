@@ -9,8 +9,6 @@ const mongoose = require('mongoose');
  * Model imports goes here
  */
 const Employee = require('../models/employeeModel');
-const Designation = require('../models/designation_refModel');
-const Role = require('../models/role_refModel');
 
 /**
  * Controllers goes here
@@ -22,7 +20,7 @@ const resultController = require('../controllers/resultController');
  * Utilities goes here
  */
 const logger = require('../utils/logger');
-const constants = require('../utils/errorCodes');
+const validations = require('../utils/errorCodes');
 
 /**
  * @argument req
@@ -32,13 +30,13 @@ const constants = require('../utils/errorCodes');
  */
 router.post('/register', (req, res) => {
     logger.info(process.env.TILDA + 'Inside /register ' + process.env.POST + ' method' + process.env.TILDA);
-    !req.body.employee_id && !req.body.employee_name && !req.body.password && !req.body.designation && !req.body.serviceLine && !req.body.role ? resultController.error(res, 'Not all fields were provided')
-        : !req.body.employee_id ? resultController.error(res, constants.R0001)
-            : !req.body.employee_name ? resultController.error(res, 'No Employee name was provided')
-                : !req.body.password ? resultController.error(res, 'No password was provided')
-                    : !req.body.designation ? resultController.error(res, 'No designation was provided')
-                        : !req.body.serviceLine ? resultController.error(res, 'No service line was provided')
-                            : !req.body.role ? resultController.error(res, 'No role was provided')
+    !req.body.employee_id && !req.body.employee_name && !req.body.password && !req.body.designation && !req.body.serviceLine && !req.body.role ? resultController.error(res, validations.required.EAALL)
+        : !req.body.employee_id ? resultController.error(res, validations.required.EAID)
+            : !req.body.employee_name ? resultController.error(res, validations.required.EANAME)
+                : !req.body.password ? resultController.error(res, validations.required.EAPASS)
+                    : !req.body.designation ? resultController.error(res, validations.required.EADES)
+                        : !req.body.serviceLine ? resultController.error(res, validations.required.EASL)
+                            : !req.body.role ? resultController.error(res, validations.required.EAROLE)
                                 : employeeController.registerEmployee(req, res);
 });
 
@@ -50,8 +48,8 @@ router.post('/register', (req, res) => {
  */
 router.post('/login', (req, res) => {
     logger.info(process.env.TILDA + 'Inside /login ' + process.env.POST + ' method' + process.env.TILDA);
-    !req.body.employee_id ? resultController.error(res, 'No EmployeeID Provided')
-        : !req.body.password ? resultController.error(res, 'No Password provided')
+    !req.body.employee_id ? resultController.error(res, validations.required.EAID)
+        : !req.body.password ? resultController.error(res, validations.required.EAPASS)
             : employeeController.loginEmployee(req, res);
 });
 
@@ -60,30 +58,14 @@ router.post('/login', (req, res) => {
  * @argument res
  * @returns all the employees and their information from the database
  */
-router.get('/reference/designations', (req, res) => {
-    Designation.find().exec()
-        .then(result => {
-            resultController.success(res, 200, result);
-        })
-        .catch(err => {
-            resultController.error(res, err);
-        });
-});
+router.get('/reference/designations', employeeController.referenceDesignations);
 
 /**
  * @argument req
  * @argument res
  * @returns all the employees and their information from the database
  */
-router.get('/reference/roles', (req, res) => {
-    Role.find().exec()
-        .then(result => {
-            resultController.success(res, 200, result);
-        })
-        .catch(err => {
-            resultController.error(res, err);
-        });
-});
+router.get('/reference/roles', employeeController.referenceRoles);
 
 /**
  * @argument req
@@ -106,9 +88,7 @@ router.use((req, res, next) => {
  * @argument res
  * This route helps the user to be loggedIn even after page refresh
  */
-router.post('/me', (req, res) => {
-    resultController.success(res, 200, req.decoded);
-});
+router.post('/me', employeeController.profile);
 
 /**
  * @argument req
