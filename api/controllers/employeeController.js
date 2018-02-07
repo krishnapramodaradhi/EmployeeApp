@@ -17,10 +17,11 @@ const Role = require('../models/role_refModel');
 const resultController = require('../controllers/resultController');
 
 /**
- * A utilility for logging the results
+ * A utility for logging the results
  */
 const logger = require('../utils/logger');
 const validations = require('../utils/errorCodes');
+const config = require('../config/config');
 
 /**
  * Exporting the module so that it can be used in other modules
@@ -28,13 +29,13 @@ const validations = require('../utils/errorCodes');
 module.exports = {
     registerEmployee: (req, res) => {
         let employee = new Employee();
-        employee._id = new mongoose.Types.ObjectId(),
-            employee.employee_id = req.body.employee_id,
-            employee.employee_name = req.body.employee_name,
-            employee.password = req.body.password,
-            employee.designation = req.body.designation,
-            employee.serviceLine = req.body.serviceLine,
-            employee.role = req.body.role
+        employee._id = new mongoose.Types.ObjectId();
+            employee.employee_id = req.body.employee_id;
+            employee.employee_name = req.body.employee_name;
+            employee.password = req.body.password;
+            employee.designation = req.body.designation;
+            employee.serviceLine = req.body.serviceLine;
+            employee.role = req.body.role;
         employee.save()
             .then(result => {
                 resultController.success(res, 201, validations.success.EASREG);
@@ -64,13 +65,13 @@ module.exports = {
                 let validPassword;
                 if (!employee) {
                     resultController.error(res, validations.errors.EAAUTH);
-                } else if (employee) {
+                } else {
                     !req.body.password ? resultController.error(res, validations.required.EAPASS)
                         : validPassword = employee.comparePassword(req.body.password);
                     if (!validPassword) {
                         resultController.error(res, validations.errors.EAINVALIDPASS);
                     } else {
-                        let token = jwt.sign({ employee_id: employee.employee_id, employee_name: employee.employee_name }, process.env.SECRET, { expiresIn: '24h' });
+                        let token = jwt.sign({ employee_id: employee.employee_id, employee_name: employee.employee_name }, config.secret, { expiresIn: '24h' });
                         res.status(200).json({
                             success: true,
                             message: validations.success.EASAUTH,
@@ -88,7 +89,7 @@ module.exports = {
             if (err) {
                 resultController.error(res, 'Invalid token: ' + err);
             } else {
-                logger.info(process.env.TILDA + 'Token decoded' + process.env.TILDA);
+                logger.info(config.tilda + 'Token decoded' + config.tilda);
                 req.decoded = decoded;
             }
         })

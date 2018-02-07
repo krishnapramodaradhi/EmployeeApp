@@ -1,21 +1,22 @@
 /**
- * A utilility for logging the results
+ * A utility for logging the results
  */
 const logger = require('../utils/logger');
+const config = require('../config/config');
 
 /**
  * Exporting the module so that it can be used in other modules
  */
 module.exports = {
     error: (res, message) => {
-        logger.error(process.env.TILDA + ' ' + message + ' ' + process.env.TILDA);
+        logger.error(config.tilda + ' ' + message + ' ' + config.tilda);
         res.status(500).json({
             success: false,
             message: message
         });
     },
     success: (res, status, message) => {
-        logger.info(process.env.TILDA + ' ' + message + ' ' + process.env.TILDA);
+        logger.info(config.tilda + ' ' + message + ' ' + config.tilda);
         res.status(status).json({
             success: true,
             message: message
