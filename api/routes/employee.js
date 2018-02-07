@@ -28,7 +28,7 @@ const config = require('../config/config');
  * @returns a success or error message based on the request
  */
 router.post('/register', (req, res) => {
-    logger.info(config.tilda + 'Inside /register ' + process.env.POST + ' method' + config.tilda);
+    logger.info(config.tilda + 'Inside /register ' + config.post + ' method' + config.tilda);
     !req.body.employee_id && !req.body.employee_name && !req.body.password && !req.body.designation && !req.body.serviceLine && !req.body.role ? resultController.error(res, validations.required.EAALL)
         : !req.body.employee_id ? resultController.error(res, validations.required.EAID)
             : !req.body.employee_name ? resultController.error(res, validations.required.EANAME)
@@ -44,7 +44,7 @@ router.post('/register', (req, res) => {
  * @returns a success or error message and the login information of the employee.
  */
 router.post('/login', (req, res) => {
-    logger.info(config.tilda + 'Inside /login ' + process.env.POST + ' method' + config.tilda);
+    logger.info(config.tilda + 'Inside /login ' + config.post + ' method' + config.tilda);
     !req.body.employee_id ? resultController.error(res, validations.required.EAID)
         : !req.body.password ? resultController.error(res, validations.required.EAPASS)
             : employeeController.loginEmployee(req, res);
